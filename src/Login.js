@@ -1,15 +1,15 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import './Login.css'
 import mailicon from './Assets/icons/Leading Icon.svg'
 import passicon from './Assets/icons/password-icon.svg'
 import expand from './Assets/icons/expand_more.svg'
-import {Link, useNavigate}  from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 function Login() {
-     const [email, setEmail] = useState();
+    const [email, setEmail] = useState();
     const [password, setPassword] = useState();
-   const  navigate = useNavigate();
-   axios.defaults.withCredentials=true;
+    const navigate = useNavigate();
+    axios.defaults.withCredentials = true;
     const handleSubmit = async (e) => {
         e.preventDefault();
         const data = { email, password };
@@ -17,21 +17,18 @@ function Login() {
         try {
             const response = await axios.post('http://localhost:5080/logininfo', data);
             console.log("res", response);
-            if (response.data === "success") {
-                console.log(response.data)
-                navigate('/Home');
-            }
-           
-            else {
-                alert(response.data)
+            if (response.data.success) {
+                navigate('/home');
+            } else {
+                alert(response.data.message);
             }
         }
         catch (error) {
-           
+
             console.error('Error:', error);
         }
 
-    } 
+    }
     return (
         <div className='hero'>
             <form onSubmit={handleSubmit}>
